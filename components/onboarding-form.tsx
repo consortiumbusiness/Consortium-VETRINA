@@ -174,7 +174,8 @@ export function OnboardingForm() {
     return v ? [v] : [];
   };
 
-  const canAdvance = selectedForStep(current.key).length > 0;
+  // A flusso finito `current` è undefined (step === STEPS.length): niente deref.
+  const canAdvance = current ? selectedForStep(current.key).length > 0 : false;
 
   const score = useMemo(() => computeScore(answers), [answers]);
 
