@@ -1,0 +1,124 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-sans: "Inter", "Geist", system-ui, sans-serif;
+  }
+
+  * {
+    @apply border-white/10;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Lenis smooth scroll: when active it drives scrolling itself, so native
+     CSS smoothing must step aside to avoid double-easing / jank. */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  body {
+    @apply bg-ink-900 text-white antialiased;
+    background-color: #0a0a0b;
+  }
+
+  ::selection {
+    background: rgba(224,54,47, 0.25);
+    color: #ffffff;
+  }
+
+  /* Custom thin scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0a0a0b;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(224,54,47, 0.3);
+  }
+}
+
+@layer components {
+  /* Glassmorphism surface */
+  .glass {
+    @apply border border-white/10 bg-white/[0.02] backdrop-blur-md;
+  }
+
+  /* Faint vector grid background */
+  .bg-grid {
+    background-image: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.025) 1px,
+        transparent 1px
+      ),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+
+  /* Perspective grid floor used in hero */
+  .bg-grid-perspective {
+    background-image: linear-gradient(
+        to right,
+        rgba(224,54,47, 0.12) 1px,
+        transparent 1px
+      ),
+      linear-gradient(to bottom, rgba(224,54,47, 0.12) 1px, transparent 1px);
+    background-size: 60px 60px;
+    transform: perspective(420px) rotateX(62deg) translateY(0);
+    transform-origin: center bottom;
+  }
+
+  /* Chrome / glossy gradient text */
+  .text-chrome {
+    background: linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #e9eef5 42%,
+      #9aa7b8 78%,
+      #e2e8f0 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  .text-accent-gradient {
+    background: linear-gradient(90deg, #E0362F 0%, #B0231D 45%, #FF6B66 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  /* Eyebrow micro-label */
+  .eyebrow {
+    @apply text-[11px] font-medium uppercase tracking-widest2 text-white/50;
+  }
+}
+
+@layer utilities {
+  .mask-fade-b {
+    -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+  }
+}
