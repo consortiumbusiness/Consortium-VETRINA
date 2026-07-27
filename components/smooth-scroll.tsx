@@ -2,12 +2,13 @@
 
 import { useEffect, type ReactNode } from "react";
 import Lenis from "lenis";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 /**
- * Wraps the app in Lenis smooth (inertial) scrolling and routes in-page
- * anchor links through Lenis so the whole downward-scroll experience feels
- * consistent with the reveal animations. Falls back to native scrolling for
- * users who prefer reduced motion.
+ * Lenis smooth (inertial) scrolling, wired into GSAP's ticker and synced with
+ * ScrollTrigger so pinned / scrubbed scroll animations stay in lockstep with
+ * the inertial scroll. Falls back to native scrolling for reduced-motion.
  */
 export function SmoothScroll({ children }: { children: ReactNode }) {
   useEffect(() => {
@@ -16,43 +17,43 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
     ).matches;
     if (prefersReduced) return;
 
+    gsap.registerPlugin(ScrollTrigger);
+
+    // land at top on fresh load
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    window.scrollTo(0, 0);
+
     const lenis = new Lenis({
       duration: 1.1,
-      // easeOutCubic — quick to react, gentle to settle
       easing: (t) => 1 - Math.pow(1 - t, 3),
       smoothWheel: true,
     });
 
-    // Expose so imperative scrolls (e.g. navbar CTA) can reuse the same easing.
     (window as unknown as { lenis?: Lenis }).lenis = lenis;
 
-    let rafId = 0;
-    const raf = (time: number) => {
-      lenis.raf(time);
-      rafId = requestAnimationFrame(raf);
-    };
-    rafId = requestAnimationFrame(raf);
+    // drive lenis from gsap's ticker (single RAF loop) + keep ScrollTrigger updated
+    lenis.on("scroll", ScrollTrigger.update);
+    const tick = (time: number) => lenis.raf(time * 1000);
+    gsap.ticker.add(tick);
+    gsap.ticker.lagSmoothing(0);
 
-    // Smoothly handle in-page anchor links (#servizi, #configuratore, ...).
+    // in-page anchor links routed through lenis (clears the fixed navbar)
     const onClick = (e: MouseEvent) => {
       const el = e.target as HTMLElement | null;
-      const anchor = el?.closest?.(
-        'a[href^="#"]'
-      ) as HTMLAnchorElement | null;
+      const anchor = el?.closest?.('a[href^="#"]') as HTMLAnchorElement | null;
       if (!anchor) return;
       const href = anchor.getAttribute("href");
       if (!href || href === "#") return;
       const target = document.querySelector(href);
       if (!target) return;
       e.preventDefault();
-      // -80px to clear the fixed navbar.
       lenis.scrollTo(target as HTMLElement, { offset: -80 });
     };
     document.addEventListener("click", onClick);
 
     return () => {
       document.removeEventListener("click", onClick);
-      cancelAnimationFrame(rafId);
+      gsap.ticker.remove(tick);
       lenis.destroy();
       delete (window as unknown as { lenis?: Lenis }).lenis;
     };

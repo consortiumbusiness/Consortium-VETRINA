@@ -13,31 +13,27 @@ export function LegalShell({
   children: ReactNode;
 }) {
   return (
-    <main className="relative min-h-screen bg-ink-900 px-6 py-16 text-white">
+    <main className="relative min-h-screen bg-bg px-6 py-16 text-paper">
       <div className="mx-auto max-w-3xl">
         <Link
           href="/"
-          className="group inline-flex items-center gap-1.5 text-sm text-white/50 transition-colors hover:text-white"
+          className="label inline-flex items-center gap-1.5 transition-colors hover:text-paper"
         >
           <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
           Torna al sito
         </Link>
 
-        <div className="mt-10 flex items-center gap-2.5">
-          <span className="grid h-8 w-8 place-items-center rounded-lg border border-white/15 bg-white/[0.03]">
-            <span className="h-3.5 w-3.5 rounded-[5px] bg-white" />
-          </span>
-          <span className="text-[15px] font-semibold tracking-tight">
-            Consortium
+        <div className="mt-10 flex items-center gap-3">
+          <span className="h-7 w-7 rounded-[9px] bg-paper" />
+          <span className="text-[15px] font-semibold tracking-tight text-paper">
+            Consortium<span className="text-accent-soft">.</span>
           </span>
         </div>
 
-        <h1 className="mt-8 text-4xl font-bold tracking-tight text-chrome">
+        <h1 className="display mt-8 text-4xl tracking-tight text-paper">
           {title}
         </h1>
-        <p className="mt-3 text-sm text-white/40">
-          Ultimo aggiornamento: {updated}
-        </p>
+        <p className="label mt-4">Ultimo aggiornamento: {updated}</p>
 
         <div className="mt-10 space-y-10">{children}</div>
       </div>
@@ -55,10 +51,10 @@ export function LegalSection({
 }) {
   return (
     <section>
-      <h2 className="text-lg font-semibold tracking-tight text-white">
+      <h2 className="text-lg font-semibold tracking-tight text-paper">
         {title}
       </h2>
-      <div className="mt-3 space-y-3 text-sm leading-relaxed text-white/60">
+      <div className="mt-3 space-y-3 text-sm leading-relaxed text-t2">
         {children}
       </div>
     </section>

@@ -6,7 +6,6 @@ import {
   Check,
   ArrowRight,
   ArrowLeft,
-  Sparkles,
   Building2,
   Store,
   Briefcase,
@@ -197,118 +196,110 @@ export function OnboardingForm() {
   const finished = step >= STEPS.length;
 
   return (
-    <section id="configuratore" className="relative px-6 py-28 sm:py-36">
-      <div className="mx-auto max-w-4xl">
-        {/* Heading */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.7 }}
-          className="mb-12 text-center"
+    <section id="configuratore" className="gutter-x relative py-28 sm:py-40">
+      {/* header */}
+      <div className="border-t pt-6">
+        <span className="label label-accent" data-rv>
+          [ 03 ] — Interactive Business Assessment
+        </span>
+        <h2
+          className="display mt-6 max-w-[16ch] text-[clamp(2rem,5.5vw,5rem)] text-paper"
+          data-split
         >
-          <span className="eyebrow">— Interactive Business Assessment</span>
-          <h2 className="mt-4 text-4xl font-bold tracking-tight text-chrome sm:text-5xl">
-            Configura il tuo percorso al 2.0
-          </h2>
-          <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-white/55">
-            Rispondi a tre domande. Calcoliamo in tempo reale il tuo Stato di
-            Digitalizzazione e sblocchiamo la richiesta di contatto.
-          </p>
-        </motion.div>
+          Configura il tuo percorso al 2.0
+        </h2>
+        <p className="mt-6 max-w-xl text-[15px] leading-relaxed text-t2" data-rv>
+          Rispondi a tre domande. Calcoliamo in tempo reale il tuo Stato di
+          Digitalizzazione e sblocchiamo la richiesta di contatto.
+        </p>
+      </div>
 
-        <div className="glass relative overflow-hidden rounded-3xl p-6 sm:p-10">
-          {/* ambient glow */}
-          <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[radial-gradient(circle,rgba(255,107,102,0.18),transparent_60%)] blur-2xl" />
-
-          {/* Progress + live score */}
-          <div className="relative mb-8 flex items-center justify-between gap-6">
-            <div className="flex-1">
-              <div className="mb-2 flex items-center justify-between text-[11px] uppercase tracking-widest2 text-white/40">
-                <span>
-                  {finished
-                    ? "Completato"
-                    : `Step ${step + 1} / ${STEPS.length}`}
-                </span>
-                <span>Stato di Digitalizzazione</span>
-              </div>
-              <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/10">
-                <motion.div
-                  className="h-full rounded-full bg-gradient-to-r from-accent via-accent-deep to-accent-soft"
-                  animate={{ width: `${score}%` }}
-                  transition={{ type: "spring", stiffness: 80, damping: 18 }}
-                />
-              </div>
+      <div data-frame className="relative mt-14 overflow-hidden p-6 sm:p-12">
+        {/* Progress + live score */}
+        <div className="relative mb-10 flex items-center justify-between gap-6">
+          <div className="flex-1">
+            <div className="mb-3 flex items-center justify-between">
+              <span className="label">
+                {finished ? "Completato" : `Step ${step + 1} / ${STEPS.length}`}
+              </span>
+              <span className="label">Stato di Digitalizzazione</span>
             </div>
-            <ScoreDial score={score} />
-          </div>
-
-          {/* Body */}
-          <AnimatePresence mode="wait">
-            {!finished ? (
+            <div className="h-px w-full overflow-hidden bg-[color:var(--line)]">
               <motion.div
-                key={current.key}
-                initial={{ opacity: 0, x: 24 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -24 }}
-                transition={{ duration: 0.35 }}
-              >
-                <h3 className="text-xl font-semibold tracking-tight text-white sm:text-2xl">
-                  {current.title}
-                </h3>
-                <p className="mt-1.5 text-sm text-white/45">{current.hint}</p>
-
-                <div className="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                  {current.options.map((opt) => {
-                    const active = selectedForStep(current.key).includes(opt.id);
-                    return (
-                      <OptionCard
-                        key={opt.id}
-                        opt={opt}
-                        active={active}
-                        onClick={() => select(opt.id)}
-                      />
-                    );
-                  })}
-                </div>
-
-                {/* Nav */}
-                <div className="mt-8 flex items-center justify-between">
-                  <Button
-                    variant="link"
-                    size="sm"
-                    onClick={() => setStep((s) => Math.max(0, s - 1))}
-                    className={cn(step === 0 && "pointer-events-none opacity-0")}
-                  >
-                    <ArrowLeft className="h-4 w-4" />
-                    Indietro
-                  </Button>
-                  <Button
-                    variant="primary"
-                    onClick={() => setStep((s) => s + 1)}
-                    disabled={!canAdvance}
-                  >
-                    {isLast ? "Vedi il risultato" : "Continua"}
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
-                </div>
-              </motion.div>
-            ) : (
-              <ResultPanel
-                key="result"
-                score={score}
-                answers={answers}
-                submitted={submitted}
-                onSubmit={() => setSubmitted(true)}
-                onRestart={() => {
-                  setAnswers({ goals: [] });
-                  setStep(0);
-                  setSubmitted(false);
-                }}
+                className="h-full bg-accent-soft"
+                animate={{ width: `${score}%` }}
+                transition={{ type: "spring", stiffness: 80, damping: 18 }}
               />
-            )}
-          </AnimatePresence>
+            </div>
+          </div>
+          <ScoreDial score={score} />
         </div>
+
+        {/* Body */}
+        <AnimatePresence mode="wait">
+          {!finished ? (
+            <motion.div
+              key={current.key}
+              initial={{ opacity: 0, x: 24 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -24 }}
+              transition={{ duration: 0.35 }}
+            >
+              <h3 className="text-xl font-semibold tracking-tight text-paper sm:text-2xl">
+                {current.title}
+              </h3>
+              <p className="mt-2 text-sm text-t3">{current.hint}</p>
+
+              <div className="mt-8 grid grid-cols-1 gap-px border sm:grid-cols-2">
+                {current.options.map((opt) => {
+                  const active = selectedForStep(current.key).includes(opt.id);
+                  return (
+                    <OptionCard
+                      key={opt.id}
+                      opt={opt}
+                      active={active}
+                      onClick={() => select(opt.id)}
+                    />
+                  );
+                })}
+              </div>
+
+              {/* Nav */}
+              <div className="mt-8 flex items-center justify-between">
+                <Button
+                  variant="link"
+                  size="sm"
+                  onClick={() => setStep((s) => Math.max(0, s - 1))}
+                  className={cn(step === 0 && "pointer-events-none opacity-0")}
+                >
+                  <ArrowLeft className="h-4 w-4" />
+                  Indietro
+                </Button>
+                <Button
+                  variant="accent"
+                  onClick={() => setStep((s) => s + 1)}
+                  disabled={!canAdvance}
+                >
+                  {isLast ? "Vedi il risultato" : "Continua"}
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              </div>
+            </motion.div>
+          ) : (
+            <ResultPanel
+              key="result"
+              score={score}
+              answers={answers}
+              submitted={submitted}
+              onSubmit={() => setSubmitted(true)}
+              onRestart={() => {
+                setAnswers({ goals: [] });
+                setStep(0);
+                setSubmitted(false);
+              }}
+            />
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );
@@ -331,36 +322,34 @@ function OptionCard({
       type="button"
       onClick={onClick}
       className={cn(
-        "group relative flex items-start gap-4 rounded-2xl border p-4 text-left transition-all duration-200",
-        active
-          ? "border-accent/50 bg-accent/[0.06] shadow-[0_0_30px_-10px_rgba(224,54,47,0.5)]"
-          : "border-white/10 bg-white/[0.02] hover:border-white/25 hover:bg-white/[0.04]"
+        "group relative flex items-start gap-4 bg-bg p-5 text-left transition-colors duration-200",
+        active ? "bg-accent/[0.12]" : "hover:bg-bg-2"
       )}
     >
       <span
         className={cn(
-          "grid h-10 w-10 shrink-0 place-items-center rounded-xl border transition-colors",
+          "grid h-10 w-10 shrink-0 place-items-center border transition-colors",
           active
-            ? "border-accent/40 bg-accent/10 text-accent"
-            : "border-white/10 bg-white/[0.03] text-white/60"
+            ? "border-accent-soft text-accent-soft"
+            : "border-[color:var(--line)] text-t3"
         )}
       >
-        <Icon className="h-5 w-5" />
+        <Icon className="h-4 w-4" />
       </span>
       <span className="flex-1">
-        <span className="block text-sm font-medium text-white">
+        <span className="block text-sm font-medium text-paper">
           {opt.label}
         </span>
-        <span className="mt-0.5 block text-xs leading-relaxed text-white/45">
+        <span className="mt-1 block text-xs leading-relaxed text-t3">
           {opt.desc}
         </span>
       </span>
       <span
         className={cn(
-          "mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full border transition-all",
+          "mt-0.5 grid h-5 w-5 shrink-0 place-items-center border transition-all",
           active
-            ? "border-accent bg-accent text-ink-900"
-            : "border-white/20 text-transparent"
+            ? "border-accent-soft bg-accent-soft text-bg"
+            : "border-[color:var(--line-2)] text-transparent"
         )}
       >
         <Check className="h-3 w-3" strokeWidth={3} />
@@ -381,8 +370,8 @@ function ScoreDial({ score }: { score: number }) {
           cy="28"
           r={r}
           fill="none"
-          stroke="rgba(255,255,255,0.08)"
-          strokeWidth="4"
+          stroke="rgba(241,240,234,0.1)"
+          strokeWidth="2"
         />
         <motion.circle
           cx="28"
@@ -390,7 +379,7 @@ function ScoreDial({ score }: { score: number }) {
           r={r}
           fill="none"
           stroke="url(#dialGrad)"
-          strokeWidth="4"
+          strokeWidth="2"
           strokeLinecap="round"
           strokeDasharray={c}
           animate={{ strokeDashoffset: offset }}
@@ -398,12 +387,12 @@ function ScoreDial({ score }: { score: number }) {
         />
         <defs>
           <linearGradient id="dialGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#E0362F" />
-            <stop offset="100%" stopColor="#FF6B66" />
+            <stop offset="0%" stopColor="#7c2a3b" />
+            <stop offset="100%" stopColor="#a83b52" />
           </linearGradient>
         </defs>
       </svg>
-      <span className="absolute text-sm font-bold text-white">
+      <span className="absolute font-mono text-sm font-bold text-paper">
         {Math.round(score)}
       </span>
     </div>
@@ -479,19 +468,19 @@ function ResultPanel({
       <motion.div
         initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="flex flex-col items-center py-8 text-center"
+        className="flex flex-col items-center py-10 text-center"
       >
-        <span className="grid h-16 w-16 place-items-center rounded-2xl border border-accent/40 bg-accent/10">
-          <Check className="h-8 w-8 text-accent" strokeWidth={2.5} />
+        <span className="grid h-16 w-16 place-items-center border border-accent-soft text-accent-soft">
+          <Check className="h-8 w-8" strokeWidth={2.5} />
         </span>
-        <h3 className="mt-6 text-2xl font-semibold text-chrome">
+        <h3 className="mt-8 text-2xl font-semibold text-paper">
           Richiesta ricevuta
         </h3>
-        <p className="mt-3 max-w-md text-sm text-white/55">
+        <p className="mt-4 max-w-md text-sm text-t2">
           Grazie. Il nostro team analizzerà il tuo Stato di Digitalizzazione
           ({Math.round(score)}/100) e ti ricontatterà con un percorso su misura.
         </p>
-        <Button variant="ghost" className="mt-8" onClick={onRestart}>
+        <Button variant="ghost" className="mt-10" onClick={onRestart}>
           Rifai l&apos;assessment
         </Button>
       </motion.div>
@@ -505,21 +494,18 @@ function ResultPanel({
       exit={{ opacity: 0, x: -24 }}
       transition={{ duration: 0.35 }}
     >
-      <div className="flex items-center gap-2 text-accent">
-        <Sparkles className="h-4 w-4" />
-        <span className="eyebrow text-accent">Assessment completato</span>
-      </div>
-      <h3 className="mt-3 text-2xl font-semibold tracking-tight text-white sm:text-3xl">
+      <span className="label label-accent">Assessment completato</span>
+      <h3 className="mt-4 text-2xl font-semibold tracking-tight text-paper sm:text-3xl">
         {tier.title}
       </h3>
-      <p className="mt-3 text-sm leading-relaxed text-white/55">{tier.body}</p>
+      <p className="mt-4 text-sm leading-relaxed text-t2">{tier.body}</p>
 
       {/* recommended focus */}
       <div className="mt-6 flex flex-wrap gap-2">
         {recommendedFocus(answers).map((f) => (
           <span
             key={f}
-            className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs text-white/70"
+            className="border border-[color:var(--line)] px-3 py-1.5 text-xs text-t2"
           >
             {f}
           </span>
@@ -527,14 +513,9 @@ function ResultPanel({
       </div>
 
       {/* Unlocked contact form */}
-      <form
-        onSubmit={handleSubmit}
-        className="mt-8 space-y-4 border-t border-white/10 pt-8"
-      >
-        <p className="text-sm font-medium text-white">
-          Sblocca il tuo percorso su misura
-        </p>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <form onSubmit={handleSubmit} className="mt-10 space-y-5 border-t pt-10">
+        <p className="label label-accent">Sblocca il tuo percorso su misura</p>
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
           <Field name="name" label="Nome e cognome" placeholder="Mario Rossi" />
           <Field
             name="company"
@@ -566,12 +547,12 @@ function ResultPanel({
         />
 
         {/* GDPR consent */}
-        <label className="flex items-start gap-3 text-xs leading-relaxed text-white/55">
+        <label className="flex items-start gap-3 text-xs leading-relaxed text-t2">
           <input
             type="checkbox"
             checked={consent}
             onChange={(e) => setConsent(e.target.checked)}
-            className="mt-0.5 h-4 w-4 shrink-0 accent-[#E0362F]"
+            className="mt-0.5 h-4 w-4 shrink-0 accent-[#7c2a3b]"
           />
           <span>
             Ho letto l&apos;
@@ -579,7 +560,7 @@ function ResultPanel({
               href="/privacy"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-accent underline-offset-2 hover:underline"
+              className="text-accent-soft underline-offset-2 hover:underline"
             >
               informativa privacy
             </a>{" "}
@@ -588,7 +569,7 @@ function ResultPanel({
         </label>
 
         {error && (
-          <p className="text-sm text-red-400" role="alert">
+          <p className="text-sm text-accent-soft" role="alert">
             {error}
           </p>
         )}
@@ -604,7 +585,7 @@ function ResultPanel({
             <ArrowLeft className="h-4 w-4" />
             Ricomincia
           </Button>
-          <Button type="submit" variant="primary" size="lg" disabled={loading}>
+          <Button type="submit" variant="accent" size="lg" disabled={loading}>
             {loading ? "Invio in corso…" : "Richiedi contatto"}
             {!loading && <ArrowRight className="h-4 w-4" />}
           </Button>
@@ -629,15 +610,13 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="mb-1.5 block text-xs uppercase tracking-widest2 text-white/40">
-        {label}
-      </span>
+      <span className="label mb-2 block">{label}</span>
       <input
         name={name}
         type={type}
         required={required}
         placeholder={placeholder}
-        className="w-full rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm text-white placeholder:text-white/25 outline-none transition-colors focus:border-accent/50 focus:bg-white/[0.04]"
+        className="w-full border-b border-[color:var(--line-2)] bg-transparent py-3 text-sm text-paper placeholder:text-t4 outline-none transition-colors focus:border-accent-soft"
       />
     </label>
   );

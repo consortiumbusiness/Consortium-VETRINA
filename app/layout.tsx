@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { SmoothScroll } from "@/components/smooth-scroll";
+import { SiteMotion } from "@/components/site-motion";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
+  display: "swap",
+});
+
+const mono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
   display: "swap",
 });
 
@@ -36,9 +43,19 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="it" className={`${inter.variable} dark`}>
-      <body className="bg-ink-900 font-sans text-white">
+    <html lang="it" className={`${inter.variable} ${mono.variable} dark`}>
+      <body className="font-sans">
+        {/* brand loader */}
+        <div id="loader" aria-hidden="true">
+          <div className="loader-mark" />
+          <span className="loader-count">000</span>
+          <span className="loader-word">Consortium</span>
+        </div>
+        {/* custom cursor */}
+        <div className="cursor hide" aria-hidden="true" />
+
         <SmoothScroll>{children}</SmoothScroll>
+        <SiteMotion />
       </body>
     </html>
   );

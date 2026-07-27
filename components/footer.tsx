@@ -1,12 +1,11 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
 
 const COLUMNS = [
   {
     title: "Suite",
     links: [
-      { label: "Digital Foundations", href: "#servizi" },
-      { label: "Digital Development", href: "#servizi" },
+      { label: "Fondamenta digitali", href: "#servizi" },
+      { label: "Sviluppo su misura", href: "#servizi" },
       { label: "Business & Finance", href: "#servizi" },
     ],
   },
@@ -18,105 +17,113 @@ const COLUMNS = [
       { label: "Contatti", href: "#configuratore" },
     ],
   },
+  {
+    title: "Legale",
+    links: [
+      { label: "Privacy Policy", href: "/privacy" },
+      { label: "Cookie Policy", href: "/cookie-policy" },
+    ],
+  },
 ];
 
 export function Footer() {
   return (
-    <footer className="relative border-t border-white/10 px-6 py-16">
-      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 md:grid-cols-4">
-        {/* Brand */}
-        <div className="md:col-span-1">
-          <div className="flex items-center gap-2.5">
-            <span className="grid h-8 w-8 place-items-center rounded-lg border border-white/15 bg-white/[0.03]">
-              <span className="h-3.5 w-3.5 rounded-[5px] bg-white" />
-            </span>
-            <span className="text-[15px] font-semibold tracking-tight">
-              Consortium
+    <footer className="gutter-x relative overflow-hidden pb-14 pt-28">
+      {/* closing statement */}
+      <div className="border-t pt-10">
+        <span className="label label-accent" data-rv>
+          [ 04 ] — Start a conversation
+        </span>
+        <h2
+          className="display mt-8 max-w-[14ch] text-[clamp(2.4rem,8vw,8rem)] text-paper"
+          data-split
+        >
+          Ingegnerizziamo la tua crescita.
+        </h2>
+        <div className="mt-10">
+          <a href="#configuratore" data-roll className="btn btn-solid">
+            Avvia l&apos;assessment
+          </a>
+        </div>
+      </div>
+
+      {/* meta */}
+      <div className="mt-28 grid grid-cols-1 gap-12 border-t pt-12 md:grid-cols-4">
+        {/* brand */}
+        <div>
+          <div className="flex items-center gap-3">
+            <span className="h-7 w-7 rounded-[9px] bg-paper" />
+            <span className="text-[15px] font-semibold tracking-tight text-paper">
+              Consortium<span className="text-accent-soft">.</span>
             </span>
           </div>
-          <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/45">
-            Business Suite. Cuciamo l&apos;infrastruttura digitale del tuo
-            business, su misura.
-          </p>
-          <address className="mt-5 not-italic text-xs leading-relaxed text-white/35">
+          <address className="mt-6 not-italic text-[13px] leading-relaxed text-t3">
             SETTANTA S.R.L.S.
             <br />
-            Piazza della Concordia 7, 80040 San Sebastiano al Vesuvio (NA)
+            Piazza della Concordia 7
+            <br />
+            80040 San Sebastiano al Vesuvio (NA)
             <br />
             P.IVA 10368711213
             <br />
             <a
               href="mailto:consortium@settanta.eu"
-              className="transition-colors hover:text-white/70"
+              className="transition-colors hover:text-paper"
             >
               consortium@settanta.eu
             </a>
-            {" · "}
+            <br />
             <a
               href="tel:+393518562718"
-              className="transition-colors hover:text-white/70"
+              className="transition-colors hover:text-paper"
             >
               +39 351 8562718
             </a>
           </address>
         </div>
 
-        {/* Link columns */}
         {COLUMNS.map((col) => (
           <div key={col.title}>
-            <h4 className="eyebrow mb-4">{col.title}</h4>
+            <h4 className="label label-accent mb-5">{col.title}</h4>
             <ul className="space-y-3">
-              {col.links.map((l) => (
-                <li key={l.label}>
-                  <a
-                    href={l.href}
-                    className="inline-flex items-center gap-1 text-sm text-white/60 transition-colors hover:text-white"
-                  >
-                    {l.label}
-                  </a>
-                </li>
-              ))}
+              {col.links.map((l) =>
+                l.href.startsWith("/") ? (
+                  <li key={l.label}>
+                    <Link
+                      href={l.href}
+                      className="text-[14px] text-t2 transition-colors hover:text-paper"
+                    >
+                      {l.label}
+                    </Link>
+                  </li>
+                ) : (
+                  <li key={l.label}>
+                    <a
+                      href={l.href}
+                      className="text-[14px] text-t2 transition-colors hover:text-paper"
+                    >
+                      {l.label}
+                    </a>
+                  </li>
+                )
+              )}
             </ul>
           </div>
         ))}
-
-        {/* Legal column */}
-        <div>
-          <h4 className="eyebrow mb-4">Legale</h4>
-          <ul className="space-y-3">
-            <li>
-              <Link
-                href="/privacy"
-                className="inline-flex items-center gap-1 text-sm text-white/60 transition-colors hover:text-white"
-              >
-                Privacy Policy
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/cookie-policy"
-                className="inline-flex items-center gap-1 text-sm text-white/60 transition-colors hover:text-white"
-              >
-                Cookie Policy
-              </Link>
-            </li>
-          </ul>
-        </div>
       </div>
 
-      <div className="mx-auto mt-14 flex max-w-6xl flex-col items-start justify-between gap-4 border-t border-white/10 pt-8 sm:flex-row sm:items-center">
-        <p className="text-xs text-white/35">
-          © {new Date().getFullYear()} Consortium Business Suite — SETTANTA
-          S.R.L.S. Tutti i diritti riservati.
+      <div className="mt-16 flex flex-col items-start justify-between gap-3 border-t pt-8 sm:flex-row sm:items-center">
+        <p className="label normal-case tracking-normal">
+          © {new Date().getFullYear()} Consortium Business Suite — SETTANTA S.R.L.S.
         </p>
         <a
           href="https://settanta.eu"
           target="_blank"
           rel="noopener noreferrer"
-          className="group inline-flex items-center gap-1.5 text-xs text-white/45 transition-colors hover:text-white"
+          data-roll
+          className="label hover:text-paper"
         >
-          Proof of Concept: settanta.eu
-          <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          Proof of Concept: settanta.eu →
         </a>
       </div>
     </footer>
