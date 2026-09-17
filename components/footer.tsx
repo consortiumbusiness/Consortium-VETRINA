@@ -12,7 +12,8 @@ const COLUMNS = [
   {
     title: "Azienda",
     links: [
-      { label: "Case History", href: "#case-history" },
+      { label: "Lavori", href: "#lavori" },
+      { label: "Prodotti", href: "#prodotti" },
       { label: "Il metodo", href: "#configuratore" },
       { label: "Contatti", href: "#configuratore" },
     ],
@@ -32,7 +33,7 @@ export function Footer() {
       {/* closing statement */}
       <div className="border-t pt-10">
         <span className="label label-accent" data-rv>
-          [ 04 ] — Start a conversation
+          [ 05 ] — Start a conversation
         </span>
         <h2
           className="display mt-8 max-w-[14ch] text-[clamp(2.4rem,8vw,8rem)] text-paper"
@@ -117,13 +118,11 @@ export function Footer() {
           © {new Date().getFullYear()} Consortium Business Suite — SETTANTA S.R.L.S.
         </p>
         <a
-          href="https://settanta.eu"
-          target="_blank"
-          rel="noopener noreferrer"
+          href="#lavori"
           data-roll
           className="label hover:text-paper"
         >
-          Proof of Concept: settanta.eu →
+          Guarda i lavori →
         </a>
       </div>
     </footer>

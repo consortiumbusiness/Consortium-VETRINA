@@ -120,6 +120,9 @@
   .split .ln {
     display: block;
     overflow: hidden;
+    /* spazio per le discendenti (g, p, q): con line-height 0.92 la maschera le tagliava */
+    padding-bottom: 0.1em;
+    margin-bottom: -0.1em;
   }
   .split .in {
     display: block;
@@ -403,4 +406,19 @@
   #loader {
     display: none !important;
   }
+}
+
+/* ---- lavori: il pacco di Flow che avanza di fase ---------------------- */
+@keyframes flow-arriva {
+  from { opacity: 0; transform: translateY(-8px) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+.flow-arriva { animation: flow-arriva 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+@keyframes flow-traccia {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+.flow-traccia { animation: flow-traccia 2s linear both; }
+@media (prefers-reduced-motion: reduce) {
+  .flow-arriva, .flow-traccia { animation: none; }
 }

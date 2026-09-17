@@ -5,7 +5,8 @@ import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
   { label: "Servizi", href: "#servizi" },
-  { label: "Case History", href: "#case-history" },
+  { label: "Lavori", href: "#lavori" },
+  { label: "Prodotti", href: "#prodotti" },
   { label: "Metodo", href: "#configuratore" },
 ];
 

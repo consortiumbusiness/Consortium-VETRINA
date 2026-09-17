@@ -52,8 +52,8 @@ export function Hero() {
             <a href="#configuratore" data-roll className="btn btn-solid">
               Avvia l&apos;assessment
             </a>
-            <a href="#case-history" data-roll className="btn">
-              Scopri settanta.eu
+            <a href="#lavori" data-roll className="btn">
+              Guarda i lavori
             </a>
           </div>
         </div>
@@ -62,7 +62,7 @@ export function Hero() {
         <div className="mt-10 grid grid-cols-2 gap-x-6 gap-y-6 border-t pt-6 md:grid-cols-4">
           <Meta k="Domini" v="Professionisti · Commercianti · PMI" />
           <Meta k="Discipline" v="Foundations · Development · Business & Finance" />
-          <Meta k="Proof of Concept" v="settanta.eu — e-commerce reale" />
+          <Meta k="Lavori" v="E-commerce · Gestionali · Cataloghi · App" />
           <Meta k="Ente" v="SETTANTA S.R.L.S. · NA" />
         </div>
       </div>

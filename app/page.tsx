@@ -1,7 +1,8 @@
 import { Navbar } from "@/components/navbar";
 import { Hero } from "@/components/hero";
 import { Services } from "@/components/services";
-import { CaseHistory } from "@/components/case-history";
+import { Lavori } from "@/components/lavori";
+import { Prodotti } from "@/components/prodotti";
 import { OnboardingForm } from "@/components/onboarding-form";
 import { Footer } from "@/components/footer";
 
@@ -11,7 +12,8 @@ export default function Home() {
       <Navbar />
       <Hero />
       <Services />
-      <CaseHistory />
+      <Lavori />
+      <Prodotti />
       <OnboardingForm />
       <Footer />
     </main>

@@ -200,7 +200,7 @@ export function OnboardingForm() {
       {/* header */}
       <div className="border-t pt-6">
         <span className="label label-accent" data-rv>
-          [ 03 ] — Interactive Business Assessment
+          [ 04 ] — Interactive Business Assessment
         </span>
         <h2
           className="display mt-6 max-w-[16ch] text-[clamp(2rem,5.5vw,5rem)] text-paper"
