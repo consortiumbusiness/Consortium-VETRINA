@@ -40,9 +40,12 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
     // in-page anchor links routed through lenis (clears the fixed navbar)
     const onClick = (e: MouseEvent) => {
       const el = e.target as HTMLElement | null;
-      const anchor = el?.closest?.('a[href^="#"]') as HTMLAnchorElement | null;
+      const anchor = el?.closest?.("a[href*='#']") as HTMLAnchorElement | null;
       if (!anchor) return;
-      const href = anchor.getAttribute("href");
+      // "#x" oppure "/pagina#x" quando la pagina è questa: si scorre con lenis
+      const url = new URL(anchor.href, location.href);
+      if (url.origin !== location.origin || url.pathname !== location.pathname) return;
+      const href = url.hash;
       if (!href || href === "#") return;
       const target = document.querySelector(href);
       if (!target) return;
@@ -50,6 +53,13 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
       lenis.scrollTo(target as HTMLElement, { offset: -80 });
     };
     document.addEventListener("click", onClick);
+
+    // arrivando da un'altra pagina con "#x", si parte dalla sezione giusta
+    const iniziale = location.hash ? document.querySelector(location.hash) : null;
+    if (iniziale)
+      requestAnimationFrame(() =>
+        lenis.scrollTo(iniziale as HTMLElement, { offset: -80, immediate: true })
+      );
 
     return () => {
       document.removeEventListener("click", onClick);

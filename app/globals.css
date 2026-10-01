@@ -422,3 +422,13 @@
 @media (prefers-reduced-motion: reduce) {
   .flow-arriva, .flow-traccia { animation: none; }
 }
+
+/* ---- cantiere: la fase di oggi respira ---------------------------------- */
+@keyframes cantiere-ora {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+.cantiere-ora { animation: cantiere-ora 2.4s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .cantiere-ora { animation: none; }
+}

@@ -62,7 +62,7 @@ export function Hero() {
         <div className="mt-10 grid grid-cols-2 gap-x-6 gap-y-6 border-t pt-6 md:grid-cols-4">
           <Meta k="Domini" v="Professionisti · Commercianti · PMI" />
           <Meta k="Discipline" v="Foundations · Development · Business & Finance" />
-          <Meta k="Lavori" v="E-commerce · Gestionali · Cataloghi · App" />
+          <Meta k="Lavori" v="E-commerce · Gestionali · Hospitality · App" />
           <Meta k="Ente" v="SETTANTA S.R.L.S. · NA" />
         </div>
       </div>

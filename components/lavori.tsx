@@ -4,6 +4,8 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { PROGETTI, type Progetto } from "@/lib/progetti";
+import { Cantiere } from "@/components/cantiere";
 
 /* Anima solo quando il riquadro è a schermo, e mai con reduced-motion. */
 function useInVista<T extends HTMLElement>() {
@@ -48,16 +50,44 @@ export function Lavori() {
           </h2>
         </div>
         <p className="max-w-sm text-[15px] leading-relaxed text-t2" data-rv>
-          Negozi online, gestionali e cataloghi che lavorano ogni giorno su
-          ordini, magazzini e conti veri. Qui sotto, tre di questi.
+          Negozi online, gestionali, cataloghi e strutture ricettive che lavorano
+          ogni giorno su ordini, magazzini, prenotazioni e conti veri. Ogni
+          lavoro ha la sua pagina, con tutto il progetto.
         </p>
       </div>
 
-      <LavoroSettanta />
-      <LavoroFlow />
-      <LavoroOrologi />
+      {PROGETTI.map((p, i) => (
+        <article key={p.slug} className={`${i === 0 ? "mt-24" : "mt-32"} border-t pt-12`}>
+          <Intestazione
+            n={p.n}
+            settore={p.settore}
+            titolo={p.nome}
+            testo={p.sommario}
+            voci={p.voci}
+            link={p.link}
+            pagina={`/lavori/${p.slug}`}
+          />
+          <VisualeProgetto tipo={p.visual} />
+        </article>
+      ))}
+
+      <Cantiere />
+
+      <div className="mt-20 flex justify-center">
+        <a href="/lavori" data-roll className="btn">
+          Tutti i lavori e il cantiere
+        </a>
+      </div>
     </section>
   );
+}
+
+/** La ricostruzione animata di un lavoro, riusata in home e nella sua pagina. */
+export function VisualeProgetto({ tipo }: { tipo: Progetto["visual"] }) {
+  if (tipo === "settanta") return <VisualeSettanta />;
+  if (tipo === "flow") return <VisualeFlow />;
+  if (tipo === "orologi") return <VisualeOrologi />;
+  return <VisualeNobi />;
 }
 
 /* ------------------------------------------------------------------------ */
@@ -69,6 +99,7 @@ function Intestazione({
   testo,
   voci,
   link,
+  pagina,
 }: {
   n: string;
   settore: string;
@@ -76,6 +107,7 @@ function Intestazione({
   testo: string;
   voci: string[];
   link?: { href: string; label: string };
+  pagina?: string;
 }) {
   return (
     <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:gap-6">
@@ -95,17 +127,24 @@ function Intestazione({
         <p className="max-w-md text-[15px] leading-relaxed text-t2" data-rv>
           {testo}
         </p>
-        {link ? (
-          <a
-            href={link.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-roll
-            className="btn mt-8"
-          >
-            {link.label}
-          </a>
-        ) : null}
+        <div className="mt-8 flex flex-wrap gap-3">
+          {pagina ? (
+            <a href={pagina} data-roll className="btn btn-solid">
+              Il progetto completo
+            </a>
+          ) : null}
+          {link ? (
+            <a
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-roll
+              className="btn"
+            >
+              {link.label}
+            </a>
+          ) : null}
+        </div>
       </div>
       <div className="md:col-span-2">
         <ul className="space-y-3" data-rv>
@@ -122,7 +161,7 @@ function Intestazione({
 
 /* ---- 01 · settanta.eu ---------------------------------------------------- */
 
-function LavoroSettanta() {
+function VisualeSettanta() {
   const schermo = useRef<HTMLDivElement>(null);
   const { ref, attivo } = useInVista<HTMLDivElement>();
   const telefono = useTick(attivo, 3200, 2);
@@ -153,21 +192,7 @@ function LavoroSettanta() {
   }, []);
 
   return (
-    <article className="mt-24 border-t pt-12">
-      <Intestazione
-        n="01"
-        settore="E-commerce · Moda sartoriale"
-        titolo="settanta.eu"
-        testo="Il negozio online di un marchio di abbigliamento sartoriale con boutique fisica. Catalogo, schede prodotto, lounge clienti su WhatsApp e un checkout collegato al gestionale, che evade e spedisce gli ordini da solo."
-        voci={[
-          "Shopify su misura",
-          "Catalogo e varianti",
-          "Lounge WhatsApp",
-          "Spedizioni automatiche",
-        ]}
-        link={{ href: "https://settanta.eu", label: "Visita il sito" }}
-      />
-
+    <>
       <div
         ref={ref}
         className="relative mt-16 grid grid-cols-1 items-end gap-6 md:grid-cols-12"
@@ -220,7 +245,7 @@ function LavoroSettanta() {
         <div className="md:col-span-4 md:col-start-2">
           <p className="label leading-relaxed" data-rv>
             Il catalogo si cura dal gestionale: foto, taglie e colori collegati
-            arrivano sul sito senza toccare Shopify a mano.
+            arrivano sul sito senza toccare il negozio a mano.
           </p>
         </div>
         <div data-frame className="relative md:col-span-7">
@@ -236,11 +261,11 @@ function LavoroSettanta() {
           </div>
         </div>
       </div>
-    </article>
+    </>
   );
 }
 
-function BarraBrowser({ url }: { url: string }) {
+export function BarraBrowser({ url }: { url: string }) {
   return (
     <div className="flex items-center gap-2 border-b bg-bg-2 px-4 py-3">
       <span className="h-2 w-2 rounded-full bg-[color:var(--line-2)]" />
@@ -254,7 +279,7 @@ function BarraBrowser({ url }: { url: string }) {
   );
 }
 
-function Telefono({ children }: { children: React.ReactNode }) {
+export function Telefono({ children }: { children: React.ReactNode }) {
   return (
     <div className="relative rounded-[34px] border border-[color:var(--line-2)] bg-[#050506] p-[7px] shadow-[0_40px_80px_-30px_rgba(0,0,0,0.9)]">
       <div className="relative aspect-[390/795] overflow-hidden rounded-[27px] bg-white">
@@ -300,7 +325,7 @@ const ALTRI = [
 ];
 const GIA = [2, 3, 1, 1]; // quanti pacchi fermi per colonna, oltre a quello che si muove
 
-function LavoroFlow() {
+function VisualeFlow() {
   const { ref, attivo } = useInVista<HTMLDivElement>();
   const passo = useTick(attivo, 2200, 4);
   const [conteggio, setConteggio] = useState([3, 3, 1, 1]);
@@ -311,22 +336,7 @@ function LavoroFlow() {
 
   let k = 0;
   return (
-    <article className="mt-32 border-t pt-12">
-      <Intestazione
-        n="02"
-        settore="Gestionale · E-commerce e negozio"
-        titolo="Flow by Consortium"
-        testo="Il sistema che manda avanti il negozio: di notte raccoglie vendite e incassi, al mattino il foglio della giornata è già compilato. Evade gli ordini, compra le etichette, segue ogni pacco fino alla consegna e tiene la contabilità in partita doppia."
-        voci={[
-          "Raccolta notturna",
-          "Foglio giornata",
-          "Etichette e tracking",
-          "Carico da fattura",
-          "Partita doppia",
-          "Accessi per ruolo",
-        ]}
-      />
-
+    <>
       <div
         ref={ref}
         data-frame
@@ -434,7 +444,7 @@ function LavoroFlow() {
           <span className="label">Interfaccia reale · dati dimostrativi</span>
         </div>
       </div>
-    </article>
+    </>
   );
 }
 
@@ -496,27 +506,12 @@ const OPERAZIONI = [
   ["Acquisto · 12 set", "Santos de Cartier Medium", "5.300,00 €"],
 ];
 
-function LavoroOrologi() {
+function VisualeOrologi() {
   const { ref, attivo } = useInVista<HTMLDivElement>();
   const riga = useTick(attivo, 1800, OPERAZIONI.length);
 
   return (
-    <article className="mt-32 border-t pt-12">
-      <Intestazione
-        n="03"
-        settore="Catalogo + gestionale · Orologi di lusso"
-        titolo="Il gestionale del rivenditore"
-        testo="Per un rivenditore di orologi di pregio: la vetrina pubblica dei pezzi e, dietro, il gestionale da telefono. Magazzino al costo, permute, conto vendita, vendite a rate, clienti e ricerche su commissione, fino alla ricevuta A4 generata al banco."
-        voci={[
-          "Catalogo pubblico",
-          "Magazzino al costo",
-          "Permute e conto vendita",
-          "Rate e incassi",
-          "Documenti A4",
-          "Backup automatico",
-        ]}
-      />
-
+    <>
       <div
         ref={ref}
         className="relative mt-16 grid grid-cols-1 items-center gap-10 md:grid-cols-12"
@@ -715,7 +710,7 @@ function LavoroOrologi() {
           </p>
         </div>
       </div>
-    </article>
+    </>
   );
 }
 
@@ -744,6 +739,124 @@ function Cella({
         {v}
       </div>
       {nota ? <div className="text-[9.5px] text-[#8c887f]">{nota}</div> : null}
+    </div>
+  );
+}
+
+/* ---- 04 · NOBI Suites ----------------------------------------------------- */
+
+/* La palette «Nocturne» della marca, valori del kit consegnato. */
+export const NOTTURNO = [
+  ["Notte", "#161826"],
+  ["Velluto", "#232532"],
+  ["Mezzanotte", "#262a60"],
+  ["Ardesia", "#75798c"],
+  ["Luna", "#e9e9ed"],
+  ["Lume", "#9184d9"],
+  ["Carta", "#f3f5fe"],
+];
+
+const SLIDE = [
+  ["/lavori/nobi-pres-1.jpg", "Presentazione di NOBI Suites, la copertina con il marchio"],
+  ["/lavori/nobi-pres-2.jpg", "Presentazione di NOBI Suites, sei suite per chi viaggia per lavoro"],
+  ["/lavori/nobi-pres-4.jpg", "Presentazione di NOBI Suites, il luogo di notte"],
+];
+
+function VisualeNobi() {
+  const { ref, attivo } = useInVista<HTMLDivElement>();
+  const video = useRef<HTMLVideoElement>(null);
+  const slide = useTick(attivo, 3400, SLIDE.length);
+
+  useEffect(() => {
+    const v = video.current;
+    if (!v) return;
+    if (attivo) v.play().catch(() => {});
+    else v.pause();
+  }, [attivo]);
+
+  return (
+    <div ref={ref}>
+      <div className="relative mt-16 grid grid-cols-1 items-end gap-6 md:grid-cols-12">
+        <div data-frame className="relative md:col-span-9">
+          <BarraBrowser url="nobisuites.com" />
+          <div className="relative aspect-[1440/850] overflow-hidden bg-[#161826]">
+            <Image
+              src="/lavori/nobi-desk.jpg"
+              alt="nobisuites.com, la prima schermata con la barra delle date"
+              fill
+              sizes="(min-width: 768px) 70vw, 100vw"
+              className="object-cover object-top"
+            />
+          </div>
+        </div>
+        <div className="relative mx-auto w-[62%] max-w-[260px] md:col-span-3 md:mb-[-3rem] md:w-full">
+          <Telefono>
+            <Image
+              src="/lavori/nobi-mob.jpg"
+              alt="nobisuites.com da telefono"
+              fill
+              sizes="260px"
+              className="object-cover object-top"
+            />
+          </Telefono>
+        </div>
+      </div>
+
+      <div className="mt-6 grid grid-cols-1 gap-6 md:mt-20 md:grid-cols-12">
+        <div className="md:col-span-7">
+          <div data-frame className="relative aspect-video overflow-hidden bg-[#161826]">
+            <video
+              ref={video}
+              src="/lavori/nobi-hero.mp4"
+              poster="/lavori/nobi-hero-poster.jpg"
+              muted
+              loop
+              playsInline
+              preload="none"
+              aria-label="L'intro video di NOBI Suites"
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+          </div>
+          <p className="label mt-4 leading-relaxed" data-rv>
+            L&apos;intro · 30 secondi, generata e montata in casa, in due tagli:
+            orizzontale e verticale per il telefono.
+          </p>
+        </div>
+
+        <div className="md:col-span-5">
+          <div data-frame className="relative aspect-[1400/788] overflow-hidden bg-[#161826]">
+            {SLIDE.map(([src, alt], i) => (
+              <Image
+                key={src}
+                src={src}
+                alt={alt}
+                fill
+                sizes="(min-width: 768px) 40vw, 100vw"
+                className="object-cover transition-opacity duration-1000"
+                style={{ opacity: slide === i ? 1 : 0 }}
+              />
+            ))}
+          </div>
+          <p className="label mt-4 leading-relaxed" data-rv>
+            La presentazione per la proprietà · 30 slide
+          </p>
+
+          <div className="mt-8 grid grid-cols-7 gap-px border bg-[color:var(--line)]">
+            {NOTTURNO.map(([nome, hex]) => (
+              <div key={nome} className="bg-bg">
+                <div className="aspect-[3/4]" style={{ background: hex }} />
+                <div className="px-1.5 py-2">
+                  <div className="truncate text-[10.5px] text-paper">{nome}</div>
+                  <div className="truncate font-mono text-[9px] text-t3">{hex}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <p className="label mt-4 leading-relaxed" data-rv>
+            Palette «Nocturne» · un solo carattere, tre pesi
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

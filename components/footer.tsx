@@ -1,21 +1,20 @@
-import Link from "next/link";
-
 const COLUMNS = [
   {
     title: "Suite",
     links: [
-      { label: "Fondamenta digitali", href: "#servizi" },
-      { label: "Sviluppo su misura", href: "#servizi" },
-      { label: "Business & Finance", href: "#servizi" },
+      { label: "Fondamenta digitali", href: "/#servizi" },
+      { label: "Sviluppo su misura", href: "/#servizi" },
+      { label: "Business & Finance", href: "/#servizi" },
     ],
   },
   {
     title: "Azienda",
     links: [
-      { label: "Lavori", href: "#lavori" },
-      { label: "Prodotti", href: "#prodotti" },
-      { label: "Il metodo", href: "#configuratore" },
-      { label: "Contatti", href: "#configuratore" },
+      { label: "Lavori", href: "/lavori" },
+      { label: "In cantiere", href: "/lavori#cantiere" },
+      { label: "Prodotti", href: "/#prodotti" },
+      { label: "Il metodo", href: "/#configuratore" },
+      { label: "Contatti", href: "/#configuratore" },
     ],
   },
   {
@@ -42,7 +41,7 @@ export function Footer() {
           Ingegnerizziamo la tua crescita.
         </h2>
         <div className="mt-10">
-          <a href="#configuratore" data-roll className="btn btn-solid">
+          <a href="/#configuratore" data-roll className="btn btn-solid">
             Avvia l&apos;assessment
           </a>
         </div>
@@ -87,27 +86,16 @@ export function Footer() {
           <div key={col.title}>
             <h4 className="label label-accent mb-5">{col.title}</h4>
             <ul className="space-y-3">
-              {col.links.map((l) =>
-                l.href.startsWith("/") ? (
-                  <li key={l.label}>
-                    <Link
-                      href={l.href}
-                      className="text-[14px] text-t2 transition-colors hover:text-paper"
-                    >
-                      {l.label}
-                    </Link>
-                  </li>
-                ) : (
-                  <li key={l.label}>
-                    <a
-                      href={l.href}
-                      className="text-[14px] text-t2 transition-colors hover:text-paper"
-                    >
-                      {l.label}
-                    </a>
-                  </li>
-                )
-              )}
+              {col.links.map((l) => (
+                <li key={l.label}>
+                  <a
+                    href={l.href}
+                    className="text-[14px] text-t2 transition-colors hover:text-paper"
+                  >
+                    {l.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
         ))}
@@ -118,7 +106,7 @@ export function Footer() {
           © {new Date().getFullYear()} Consortium Business Suite — SETTANTA S.R.L.S.
         </p>
         <a
-          href="#lavori"
+          href="/lavori"
           data-roll
           className="label hover:text-paper"
         >

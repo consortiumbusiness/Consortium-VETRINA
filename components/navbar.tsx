@@ -4,10 +4,11 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
-  { label: "Servizi", href: "#servizi" },
-  { label: "Lavori", href: "#lavori" },
-  { label: "Prodotti", href: "#prodotti" },
-  { label: "Metodo", href: "#configuratore" },
+  { label: "Servizi", href: "/#servizi" },
+  { label: "Lavori", href: "/lavori" },
+  { label: "Cantiere", href: "/lavori#cantiere" },
+  { label: "Prodotti", href: "/#prodotti" },
+  { label: "Metodo", href: "/#configuratore" },
 ];
 
 export function Navbar() {
@@ -30,7 +31,7 @@ export function Navbar() {
     >
       <nav className="gutter-x flex items-center justify-between py-5">
         {/* Logo — squircle + wordmark */}
-        <a href="#top" className="group flex items-center gap-3" data-cursor>
+        <a href="/#top" className="group flex items-center gap-3" data-cursor>
           <span className="h-7 w-7 rounded-[9px] bg-paper transition-transform duration-500 group-hover:rotate-[10deg]" />
           <span className="text-[15px] font-semibold tracking-tight text-paper">
             Consortium
@@ -54,7 +55,7 @@ export function Navbar() {
 
         {/* CTA */}
         <a
-          href="#configuratore"
+          href="/#configuratore"
           data-roll
           className="btn btn-accent hidden md:inline-flex"
         >
@@ -86,7 +87,7 @@ export function Navbar() {
               </a>
             ))}
             <a
-              href="#configuratore"
+              href="/#configuratore"
               onClick={() => setOpen(false)}
               className="btn btn-accent mt-2 justify-center"
             >
