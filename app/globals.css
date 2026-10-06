@@ -432,3 +432,34 @@
 @media (prefers-reduced-motion: reduce) {
   .cantiere-ora { animation: none; }
 }
+
+/* ---- apertura F-22 (intro-f22.tsx) ------------------------------------ */
+/* durante il video non si vede nessuna scritta, nemmeno la barra in alto */
+[data-navbar] {
+  transition: opacity 0.6s ease, background-color 0.5s, border-color 0.5s;
+}
+html.intro-on [data-navbar] {
+  opacity: 0;
+  pointer-events: none;
+}
+.intro-invito {
+  transition: opacity 0.6s ease;
+}
+.intro-linea {
+  position: relative;
+  width: 1px;
+  height: 56px;
+  overflow: hidden;
+  background: rgba(241, 240, 234, 0.18);
+}
+.intro-linea::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #f1f0ea;
+  animation: intro-linea 1.8s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+@keyframes intro-linea {
+  0% { transform: translateY(-100%); }
+  60%, 100% { transform: translateY(100%); }
+}

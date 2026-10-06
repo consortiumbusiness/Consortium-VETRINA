@@ -1,24 +1,9 @@
 "use client";
 
+/** I testi dell'apertura: compaiono sull'ultimo fotogramma dell'F-22 (intro-f22.tsx). */
 export function Hero() {
   return (
-    <section
-      id="top"
-      data-hero
-      className="gutter-x relative flex min-h-screen flex-col justify-between overflow-hidden pb-10 pt-32"
-    >
-      {/* abstract brand media: drifting squircle */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -right-[10vw] top-1/2 -z-10 h-[70vh] w-[70vh] -translate-y-1/2"
-      >
-        <div className="spin-slow h-full w-full rounded-[26%] border border-[color:var(--line)] opacity-70" />
-      </div>
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -right-[6vw] top-1/2 -z-10 h-[42vh] w-[42vh] -translate-y-1/2 rounded-[26%] bg-[radial-gradient(circle,rgba(124,42,59,0.18),transparent_70%)] blur-2xl"
-      />
-
+    <div className="gutter-x flex h-full flex-col justify-between pb-[max(1.5rem,4svh)] pt-24 md:pt-32">
       {/* top label row */}
       <div className="flex items-start justify-between border-t pt-4">
         <span className="label" data-rv>
@@ -59,14 +44,14 @@ export function Hero() {
         </div>
 
         {/* meta grid */}
-        <div className="mt-10 grid grid-cols-2 gap-x-6 gap-y-6 border-t pt-6 md:grid-cols-4">
+        <div className="mt-10 hidden grid-cols-2 gap-x-6 gap-y-6 border-t pt-6 md:grid md:grid-cols-4 [@media(max-height:780px)]:hidden">
           <Meta k="Domini" v="Professionisti · Commercianti · PMI" />
           <Meta k="Discipline" v="Foundations · Development · Business & Finance" />
           <Meta k="Lavori" v="E-commerce · Gestionali · Hospitality · App" />
           <Meta k="Ente" v="SETTANTA S.R.L.S. · NA" />
         </div>
       </div>
-    </section>
+    </div>
   );
 }
 

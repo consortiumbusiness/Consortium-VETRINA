@@ -265,7 +265,9 @@ export function SiteMotion() {
       const count = loader?.querySelector<HTMLElement>(".loader-count");
 
       function revealHero() {
-        if (!heroInners.length) return;
+        window.dispatchEvent(new Event("consortium:loader-fatto"));
+        // in home i testi dell'hero li fa comparire l'apertura (intro-f22.tsx)
+        if (!heroInners.length || document.querySelector("[data-intro]")) return;
         gsap.to(heroInners, {
           yPercent: 0,
           duration: 1.1,
@@ -317,7 +319,12 @@ export function SiteMotion() {
             },
             0
           )
-          .to(mark!, { scale: 0.82, duration: 0.4, ease: "power2.in" }, "-=0.15")
+          // in home il sipario aspetta i primi fotogrammi dell'F-22 (max 3,5 s)
+          .addPause(">", () => {
+            const pronta = window.__introPronta ?? Promise.resolve();
+            pronta.then(() => tl.play());
+          })
+          .to(mark!, { scale: 0.82, duration: 0.4, ease: "power2.in" })
           .to(loader, {
             yPercent: -100,
             duration: 0.9,

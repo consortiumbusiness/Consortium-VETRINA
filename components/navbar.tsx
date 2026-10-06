@@ -24,6 +24,7 @@ export function Navbar() {
 
   return (
     <header
+      data-navbar
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-colors duration-500",
         scrolled ? "border-b bg-bg/70 backdrop-blur-md" : "border-b border-transparent"
