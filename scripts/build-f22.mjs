@@ -23,7 +23,7 @@ import { join } from "node:path";
 
 const SRC =
   process.argv[2] ??
-  "../Risorse Condivise/Brand/Video/f22-touch-and-go.mp4";
+  "../Risorse Condivise/Brand/Video/f22-cockpit.mp4";
 const OUT = "public/f22";
 
 const tmp = mkdtempSync(join(tmpdir(), "f22-"));
