@@ -1,6 +1,6 @@
 # Consortium Business Suite — Sito Vetrina
 
-Landing page di **Consortium Business Suite** (marchio di *SETTANTA S.R.L.S.*):
+Landing page di **Consortium Business Suite** (ditta individuale *Consortium Business Suite di Carlo De Luca*, P.IVA 11212451212):
 consulenza aziendale e sviluppo digitale a 360° — Digital Foundations, Digital
 Development, Business & Finance.
 

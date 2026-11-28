@@ -58,13 +58,13 @@ export function Footer() {
             </span>
           </div>
           <address className="mt-6 not-italic text-[13px] leading-relaxed text-t3">
-            SETTANTA S.R.L.S.
+            Consortium Business Suite di Carlo De Luca
             <br />
-            Piazza della Concordia 7
+            Via Europa 52
             <br />
-            80040 San Sebastiano al Vesuvio (NA)
+            80040 Cercola (NA)
             <br />
-            P.IVA 10368711213
+            P.IVA 11212451212
             <br />
             <a
               href="mailto:consortium@settanta.eu"
@@ -103,7 +103,7 @@ export function Footer() {
 
       <div className="mt-16 flex flex-col items-start justify-between gap-3 border-t pt-8 sm:flex-row sm:items-center">
         <p className="label normal-case tracking-normal">
-          © {new Date().getFullYear()} Consortium Business Suite — SETTANTA S.R.L.S.
+          © {new Date().getFullYear()} Consortium Business Suite di Carlo De Luca
         </p>
         <a
           href="/lavori"

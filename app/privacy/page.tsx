@@ -20,9 +20,10 @@ export default function PrivacyPage() {
 
       <LegalSection title="1. Titolare del trattamento">
         <p>
-          Titolare del trattamento è <strong className="text-white/80">SETTANTA
-          S.R.L.S.</strong>, con sede legale in Piazza della Concordia 7, 80040
-          San Sebastiano al Vesuvio (NA), Italia, P.IVA 10368711213. Per
+          Titolare del trattamento è <strong className="text-white/80">Consortium
+          Business Suite di Carlo De Luca</strong>, ditta individuale, con sede in
+          Via Europa 52, 80040 Cercola (NA), Italia, P.IVA 11212451212, C.F.
+          DLCCRL97H30F839L. Per
           qualsiasi richiesta è possibile
           scrivere a{" "}
           <a
@@ -31,7 +32,7 @@ export default function PrivacyPage() {
           >
             consortium@settanta.eu
           </a>{" "}
-          (PEC: settanta@mypec.eu).
+          (PEC: delucacarlo@mypec.eu).
         </p>
       </LegalSection>
 

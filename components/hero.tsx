@@ -48,7 +48,7 @@ export function Hero() {
           <Meta k="Domini" v="Professionisti · Commercianti · PMI" />
           <Meta k="Discipline" v="Foundations · Development · Business & Finance" />
           <Meta k="Lavori" v="E-commerce · Gestionali · Hospitality · App" />
-          <Meta k="Ente" v="SETTANTA S.R.L.S. · NA" />
+          <Meta k="Ente" v="Ditta individuale · NA" />
         </div>
       </div>
     </div>
